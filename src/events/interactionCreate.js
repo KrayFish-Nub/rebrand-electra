@@ -1,7 +1,7 @@
 "use strict";
 
 const { Permissions, CommandInteraction } = require("discord.js");
-const { getKeyByValue } = require("../util/util.js");
+const { getKeyByValue, msToMinAndSec } = require("../util/util.js");
 module.exports.data =
 {
     name: "interactionCreate",
@@ -22,6 +22,13 @@ module.exports.run = async (interaction) =>
         cmdFile = interaction.client.commands.get(command);
     else return; /* Return if command doesn't exist. */
 
+    /* Check if command is on cooldown. */
+    if (cmdFile.cooldown.users.has(interaction.member.id))
+    {
+        interaction.reply({ content: `You can only use this command every ${msToMinAndSec(cmdFile.cooldown.length)} minutes.`, ephemeral: true });
+        return;
+    }
+
     let missingPermissions = [];
     /* Permission check */
     cmdFile.permissions.userPermissions.forEach(flag =>
@@ -32,6 +39,13 @@ module.exports.run = async (interaction) =>
 
     /* Run the command and logg if the user is not missing any permissions. */
     if (missingPermissions.length == 0)
+    {
         cmdFile.run(interaction).catch(err => console.error(err));
+        cmdFile.cooldown.users.add(interaction.member.id);
+        setTimeout(() =>
+        {
+            cmdFile.cooldown.users.delete(interaction.member.id);
+        }, cmdFile.cooldown.length);
+    }
     else interaction.reply({ content: `You are missing the following permissions.\n \`${missingPermissions.toString()}\``, ephemeral: true });
 };

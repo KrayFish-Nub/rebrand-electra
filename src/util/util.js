@@ -26,8 +26,26 @@ module.exports.getAllFiles = function getAllFiles(dirPath, arrayOfFiles)
     return arrayOfFiles;
 };
 
+/**
+ * Get the key for the given value in an object.
+ * @param {Object} object 
+ * @param {any} value 
+ * @returns Returns the key that corresponds to the value.
+ */
 module.exports.getKeyByValue = function (object, value)
 {
     return Object.keys(object).find(key => object[key] === value);
 };
+
+/**
+ * Formats milliseconds to minutes and seconds. 298999 -> 4:59
+ * @param {Number} ms The amount of milliseconds.
+ * @returns Returns the formatted string.
+ */
+module.exports.msToMinAndSec = function (ms)
+{
+    var minutes = Math.floor(ms / 60000);
+    var seconds = ((ms % 60000) / 1000).toFixed(0);
+    return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+}
 
