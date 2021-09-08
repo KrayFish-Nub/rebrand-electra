@@ -23,7 +23,6 @@ module.exports.run = async (interaction) =>
     else return; /* Return if command doesn't exist. */
 
     let missingPermissions = [];
-    let hasAccess = true;
     /* Permission check */
     cmdFile.permissions.userPermissions.forEach(flag =>
     {

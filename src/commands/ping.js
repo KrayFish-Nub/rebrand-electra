@@ -12,9 +12,10 @@ module.exports.run = async (interaction, utils) =>
     interaction.reply({ content: "Pong", ephemeral: true }).catch(err => { return Promise.reject(err) });
 };
 
-module.exports.permissions = {
+module.exports.permissions =
+{
     userPermissions: [Permissions.FLAGS.MANAGE_MESSAGES]
-}
+};
 
 module.exports.data = new SlashCommandBuilder()
     .setName("ping")
