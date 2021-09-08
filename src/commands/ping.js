@@ -2,6 +2,12 @@
 
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { Client, CommandInteraction, Permissions } = require("discord.js");
+
+module.exports.cooldown = {
+    length: 10000, /* in ms */
+    users: new Set()
+};
+
 /**
  * Runs ping command.
  * @param {CommandInteraction} interaction The Command Interaciton
@@ -12,8 +18,7 @@ module.exports.run = async (interaction, utils) =>
     interaction.reply({ content: "Pong", ephemeral: true }).catch(err => { return Promise.reject(err) });
 };
 
-module.exports.permissions =
-{
+module.exports.permissions = {
     userPermissions: [Permissions.FLAGS.MANAGE_MESSAGES]
 };
 
