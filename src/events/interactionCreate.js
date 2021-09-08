@@ -1,7 +1,7 @@
 "use strict";
 
-const { CommandInteraction } = require("discord.js");
-
+const { Permissions, CommandInteraction } = require("discord.js");
+const { getKeyByValue } = require("../util/util.js");
 module.exports.data =
 {
     name: "interactionCreate",
@@ -22,6 +22,17 @@ module.exports.run = async (interaction) =>
         cmdFile = interaction.client.commands.get(command);
     else return; /* Return if command doesn't exist. */
 
-    /* Run the command and logg any rejected promises. */
-    cmdFile.run(interaction.client, interaction).catch(err => console.error(err));
+    let missingPermissions = [];
+    let hasAccess = true;
+    /* Permission check */
+    cmdFile.permissions.userPermissions.forEach(flag =>
+    {
+        if (!interaction.member.permissions.has(flag))
+            missingPermissions.push(getKeyByValue(Permissions.FLAGS, flag));
+    });
+
+    /* Run the command and logg if the user is not missing any permissions. */
+    if (missingPermissions.length == 0)
+        cmdFile.run(interaction).catch(err => console.error(err));
+    else interaction.reply({ content: `You are missing the following permissions.\n \`${missingPermissions.toString()}\``, ephemeral: true });
 };
