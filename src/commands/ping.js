@@ -15,11 +15,12 @@ module.exports.cooldown = {
  */
 module.exports.run = async (interaction, utils) =>
 {
-    interaction.reply({ content: "Pong", ephemeral: true }).catch(err => { return Promise.reject(err) });
+    interaction.reply({ content: "Pong", ephemeral: false }).catch(err => { return Promise.reject(err) });
 };
 
+
 module.exports.permissions = {
-    userPermissions: [Permissions.FLAGS.MANAGE_MESSAGES]
+    userPermissions: [Permissions.FLAGS.SEND_MESSAGES]
 };
 
 module.exports.data = new SlashCommandBuilder()
