@@ -25,7 +25,7 @@ module.exports.run = async (interaction) =>
     /* Check if command is on cooldown. */
     if (cmdFile.cooldown.users.has(interaction.member.id))
     {
-        interaction.reply({ content: `You can only use this command every ${msToMinAndSec(cmdFile.cooldown.length)} minutes.`, ephemeral: true });
+        interaction.reply({ content: `:x: | You can only use this command every ${msToMinAndSec(cmdFile.cooldown.length)} minutes.`, ephemeral: true });
         return;
     }
 
@@ -47,5 +47,5 @@ module.exports.run = async (interaction) =>
             cmdFile.cooldown.users.delete(interaction.member.id);
         }, cmdFile.cooldown.length);
     }
-    else interaction.reply({ content: `You are missing the following permissions.\n \`${missingPermissions.toString()}\``, ephemeral: true });
+    else interaction.reply({ content: `:x: | You are missing the following permissions.\n \`${missingPermissions.toString()}\``, ephemeral: true });
 };

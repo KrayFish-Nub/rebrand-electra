@@ -26,13 +26,15 @@ const rest = new REST({ version: "9" }).setToken(process.env.BOT_TOKEN);
 {
     try
     {
-        console.log("Started refreshing application (/) commands.");
+        console.log("\x1b[32m", 'Started refreshing application (/) commands.');
+        //console.log("[INFO]: Started refreshing application (/) commands.");
         await rest.put(
             (local ? Routes.applicationGuildCommands(clientId, guildId) : Routes.applicationCommands(clientId)),
             { body: commands },
         ).then((c) =>
         {
-            console.log("Successfully reloaded application (/) commands.");
+            console.log("\x1b[32m", 'Successfully reloaded application (/) commands.');
+            //console.log("[INFO]: Successfully reloaded application (/) commands.");
             process.exit(0);
         });
     } catch (err)

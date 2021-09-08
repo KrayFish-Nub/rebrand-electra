@@ -14,5 +14,5 @@ module.exports.data =
  */
 module.exports.run = async (client) =>
 {
-    console.log("Bot is running.");
+    console.log("\x1b[33m%s\x1b[0m", "✅ [INFO]: Bot is running.");
 };
