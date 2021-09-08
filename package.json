@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploycommands": "node ./src/deployCommands.js",
-    "server": "node ../src/util/bot.js"
+    "server": "node index.js"
   },
   "repository": {
     "type": "git",
