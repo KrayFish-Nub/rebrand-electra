@@ -21,7 +21,6 @@ console.log(cyan("Loading Commands . . ."));
 const commands = getAllFiles(path.join(__dirname, "../commands"));
 if (commands.length <= 0)
     console.log(red("NO COMMANDS FOUND"));
-//console.log("[ERROR]: No commands found.");
 else
 {
     /* Iterate every file in the array and require it. Also map it to the commands collection. */
@@ -36,12 +35,10 @@ else
 
 /* Load events. */
 console.log(cyan("Loading Events . . ."));
-//console.log("Loading events..");
 /* Get an array of all files in the events folder. */
 const events = getAllFiles(path.join(__dirname, "../events"));
 if (events.length <= 0)
     console.log(red("NO EVENTS FOUND"));
-//console.log("No events found.");
 else
 {
     /* Iterate every file in the array and require it. Also register every event. */
