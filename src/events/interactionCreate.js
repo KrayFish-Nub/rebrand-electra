@@ -30,33 +30,36 @@ module.exports.run = async (interaction) =>
         return;
     }
 
+    /* Array containing all the missing permissions of the client/user to run the interaction. Ideally those arrays are empty. */
     let missingClientPermissions = [],
         missingUserPermissions = [];
 
-    /* Permission check */
+    /* Check if the client is missing any permissions. */
     cmdFile.permissions.clientPermissions.forEach(flag =>
     {
         if (!interaction.guild.me.permissions.has(flag))
             missingClientPermissions.push(getKeyByValue(Permissions.FLAGS, flag));
     });
 
+    /* If the client is missing any permissions, don't run the command. */
     if (missingClientPermissions.length != 0)
     {
         interaction.reply({ content: `:x: | I am missing the following permissions.\n \`${missingClientPermissions.toString()}\``, ephemeral: true });
         return;
     }
 
-    /* Permission check */
+    /* Check if the user is missing any permissions. */
     cmdFile.permissions.userPermissions.forEach(flag =>
     {
         if (!interaction.member.permissions.has(flag))
             missingUserPermissions.push(getKeyByValue(Permissions.FLAGS, flag));
     });
 
-    /* Run the command and logg if the user is not missing any permissions. */
+    /* Only run the command if the user is not missing any permissions. */
     if (missingUserPermissions.length == 0)
     {
         cmdFile.run(interaction).catch(err => console.error(red(err)));
+        /* Add command cooldown */
         cmdFile.cooldown.users.add(interaction.member.id);
         setTimeout(() =>
         {
