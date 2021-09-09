@@ -18,8 +18,8 @@ module.exports.run = async (interaction, utils) =>
     interaction.reply({ content: "Pong", ephemeral: false }).catch(err => { return Promise.reject(err) });
 };
 
-
 module.exports.permissions = {
+    clientPermissions: [Permissions.FLAGS.SEND_MESSAGES],
     userPermissions: [Permissions.FLAGS.SEND_MESSAGES]
 };
 

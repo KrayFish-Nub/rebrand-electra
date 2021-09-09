@@ -30,16 +30,31 @@ module.exports.run = async (interaction) =>
         return;
     }
 
-    let missingPermissions = [];
+    let missingClientPermissions = [],
+        missingUserPermissions = [];
+
+    /* Permission check */
+    cmdFile.permissions.clientPermissions.forEach(flag =>
+    {
+        if (!interaction.guild.me.permissions.has(flag))
+            missingClientPermissions.push(getKeyByValue(Permissions.FLAGS, flag));
+    });
+
+    if (missingClientPermissions.length != 0)
+    {
+        interaction.reply({ content: `:x: | I am missing the following permissions.\n \`${missingClientPermissions.toString()}\``, ephemeral: true });
+        return;
+    }
+
     /* Permission check */
     cmdFile.permissions.userPermissions.forEach(flag =>
     {
         if (!interaction.member.permissions.has(flag))
-            missingPermissions.push(getKeyByValue(Permissions.FLAGS, flag));
+            missingUserPermissions.push(getKeyByValue(Permissions.FLAGS, flag));
     });
 
     /* Run the command and logg if the user is not missing any permissions. */
-    if (missingPermissions.length == 0)
+    if (missingUserPermissions.length == 0)
     {
         cmdFile.run(interaction).catch(err => console.error(red(err)));
         cmdFile.cooldown.users.add(interaction.member.id);
@@ -48,5 +63,5 @@ module.exports.run = async (interaction) =>
             cmdFile.cooldown.users.delete(interaction.member.id);
         }, cmdFile.cooldown.length);
     }
-    else interaction.reply({ content: `:x: | You are missing the following permissions.\n \`${missingPermissions.toString()}\``, ephemeral: true });
+    else interaction.reply({ content: `:x: | You are missing the following permissions.\n \`${missingUserPermissions.toString()}\``, ephemeral: true });
 };
