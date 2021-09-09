@@ -2,7 +2,6 @@
 
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { Client, CommandInteraction, Permissions } = require("discord.js");
-const { cyan, green, red } = require("colors/safe");
 const { getAllFiles } = require("../../util/util.js");
 const path = require('path');
 
@@ -20,11 +19,11 @@ module.exports.cooldown = {
 module.exports.run = async (interaction, utils) =>
 {
     /* Load commands. */
-    console.log(cyan("Loading Commands . . ."));
+    await interaction.reply({ content: "Loading Commands . . .", ephemeral: true });
     /* Get an array of all files in the commands folder. */
     const commands = getAllFiles(path.join(__dirname, "../"));
     if (commands.length <= 0)
-        console.log(red("NO COMMANDS FOUND"));
+        interaction.editReply({ content: "NO COMMANDS FOUND", ephemeral: true });
     else
     {
         /* Iterate every file in the array and require it. Also map it to the commands collection. */
@@ -32,11 +31,11 @@ module.exports.run = async (interaction, utils) =>
         {
             delete require.cache[file];
             const props = require(`${file}`);
-            console.log(green(`${++i}. Command: ${file.split('\\').pop().split('/').pop()} loaded!`));
+            commands[i] = file.split('\\').pop().split('/').pop();
             interaction.client.commands.set(props.data.name, props);
         });
     }
-    interaction.reply({ content: "Done.", ephemeral: true });
+    interaction.editReply({ content: `Reloaded all commands.\n\`${commands.toString()}\``, ephemeral: true });
 };
 
 module.exports.permissions = {
