@@ -1,6 +1,7 @@
 "use strict";
 
 const { Client } = require("discord.js");
+const { yellow } = require("colors/safe");
 
 module.exports.data =
 {
@@ -14,5 +15,5 @@ module.exports.data =
  */
 module.exports.run = async (client) =>
 {
-    console.log("\x1b[33m%s\x1b[0m", "✅ [INFO]: Bot is running.");
+    console.log(yellow("✅ [INFO]: Bot is running."));
 };

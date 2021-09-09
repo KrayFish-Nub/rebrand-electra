@@ -2,6 +2,7 @@
 
 const { Permissions, CommandInteraction } = require("discord.js");
 const { getKeyByValue, msToMinAndSec } = require("../util/util.js");
+const { red } = require("colors/safe");
 module.exports.data =
 {
     name: "interactionCreate",
@@ -40,7 +41,7 @@ module.exports.run = async (interaction) =>
     /* Run the command and logg if the user is not missing any permissions. */
     if (missingPermissions.length == 0)
     {
-        cmdFile.run(interaction).catch(err => console.error(err));
+        cmdFile.run(interaction).catch(err => console.error(red(err)));
         cmdFile.cooldown.users.add(interaction.member.id);
         setTimeout(() =>
         {

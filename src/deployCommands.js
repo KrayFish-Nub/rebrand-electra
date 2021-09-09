@@ -7,6 +7,7 @@ require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
 const { getAllFiles } = require("./util/util.js");
+const { green } = require("colors/safe");
 
 const local = true; /* Change to false to deploy global commands */
 
@@ -26,14 +27,14 @@ const rest = new REST({ version: "9" }).setToken(process.env.BOT_TOKEN);
 {
     try
     {
-        console.log("\x1b[32m", 'Started refreshing application (/) commands.');
+        console.log(green("Started refreshing application (/) commands."));
         //console.log("[INFO]: Started refreshing application (/) commands.");
         await rest.put(
             (local ? Routes.applicationGuildCommands(clientId, guildId) : Routes.applicationCommands(clientId)),
             { body: commands },
         ).then((c) =>
         {
-            console.log("\x1b[32m", 'Successfully reloaded application (/) commands.');
+            console.log(green("Successfully reloaded application (/) commands."));
             //console.log("[INFO]: Successfully reloaded application (/) commands.");
             process.exit(0);
         });
