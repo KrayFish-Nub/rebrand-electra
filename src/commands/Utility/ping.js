@@ -15,7 +15,7 @@ module.exports.cooldown = {
  */
 module.exports.run = async (interaction, utils) =>
 {
-    interaction.reply({ content: "Pong", ephemeral: false }).catch(err => { return Promise.reject(err) });
+    interaction.reply({ content: "Pong", ephemeral: true }).catch(err => { return Promise.reject(err) });
 };
 
 module.exports.permissions = {
