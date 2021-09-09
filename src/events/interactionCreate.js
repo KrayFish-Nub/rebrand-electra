@@ -59,12 +59,16 @@ module.exports.run = async (interaction) =>
     if (missingUserPermissions.length == 0)
     {
         cmdFile.run(interaction).catch(err => console.error(red(err)));
-        /* Add command cooldown */
-        cmdFile.cooldown.users.add(interaction.member.id);
-        setTimeout(() =>
+        /* Don't add a cooldown for admins. TODO: Remove for production!! */
+        if (!interaction.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR))
         {
-            cmdFile.cooldown.users.delete(interaction.member.id);
-        }, cmdFile.cooldown.length);
+            /* Add command cooldown */
+            cmdFile.cooldown.users.add(interaction.member.id);
+            setTimeout(() =>
+            {
+                cmdFile.cooldown.users.delete(interaction.member.id);
+            }, cmdFile.cooldown.length);
+        }
     }
     else interaction.reply({ content: `:x: | You are missing the following permissions.\n \`${missingUserPermissions.toString()}\``, ephemeral: true });
 };
