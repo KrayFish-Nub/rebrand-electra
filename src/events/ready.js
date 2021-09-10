@@ -2,6 +2,7 @@
 
 const { Client } = require("discord.js");
 const { yellow } = require("colors/safe");
+const { white } = require("colors/safe");
 
 module.exports.data =
 {
@@ -16,4 +17,5 @@ module.exports.data =
 module.exports.run = async (client) =>
 {
     console.log(yellow("✅ [INFO]: Bot is running."));
+    console.log(white(`✅ [INFO]: Porting over: ${client.users.cache.size} Users`));
 };
