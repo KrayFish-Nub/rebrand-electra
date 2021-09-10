@@ -1,7 +1,7 @@
 "use strict";
 
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const { Client, CommandInteraction, Permissions } = require("discord.js");
+const { CommandInteraction, Permissions } = require("discord.js");
 
 module.exports.cooldown = {
     length: 10000, /* in ms */
