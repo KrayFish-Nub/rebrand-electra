@@ -18,24 +18,32 @@ module.exports.cooldown = {
  */
 module.exports.run = async (interaction, utils) =>
 {
-    /* Load commands. */
-    await interaction.reply({ content: "Loading Commands . . .", ephemeral: true });
-    /* Get an array of all files in the commands folder. */
-    const commands = getAllFiles(path.join(__dirname, "../"));
-    if (commands.length <= 0)
-        interaction.editReply({ content: "NO COMMANDS FOUND", ephemeral: true });
-    else
+    try
     {
-        /* Iterate every file in the array and require it. Also map it to the commands collection. */
-        commands.forEach((file, i) =>
+        /* Load commands. */
+        await interaction.reply({ content: "Loading Commands . . .", ephemeral: true });
+        /* Get an array of all files in the commands folder. */
+        const commands = getAllFiles(path.join(__dirname, "../"));
+        if (commands.length <= 0)
+            await interaction.editReply({ content: "NO COMMANDS FOUND", ephemeral: true });
+        else
         {
-            delete require.cache[file];
-            const props = require(`${file}`);
-            commands[i] = file.split('\\').pop().split('/').pop();
-            interaction.client.commands.set(props.data.name, props);
-        });
+            /* Iterate every file in the array and require it. Also map it to the commands collection. */
+            commands.forEach((file, i) =>
+            {
+                delete require.cache[file];
+                const props = require(`${file}`);
+                commands[i] = file.split('\\').pop().split('/').pop();
+                interaction.client.commands.set(props.data.name, props);
+            });
+            await interaction.editReply({ content: `Reloaded all commands.\n\`${commands.toString()}\``, ephemeral: true });
+        }
+        return Promise.resolve(commands);
     }
-    interaction.editReply({ content: `Reloaded all commands.\n\`${commands.toString()}\``, ephemeral: true });
+    catch (err)
+    {
+        return Promise.reject(err);
+    }
 };
 
 module.exports.permissions = {

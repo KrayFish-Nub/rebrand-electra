@@ -22,7 +22,6 @@ module.exports.run = async (interaction, utils) =>
         const isSetup = await Guild.findOne({ id: interaction.guildId });
         if (!isSetup)
         {
-
             const role = interaction.options.getRole("role", true);
             const channel = interaction.options.getChannel("channel", true);
             if (channel.type != "GUILD_TEXT")
@@ -37,8 +36,10 @@ module.exports.run = async (interaction, utils) =>
             });
             newGuild.save();
             interaction.editReply({ content: "Guild setup successfully.", ephemeral: true });
+            return Promise.resolve(newGuild);
         }
-        else interaction.editReply({ content: "This guild has already been setup.", ephemeral: true });
+        else await interaction.editReply({ content: "This guild has already been setup.", ephemeral: true });
+        return Promise.resolve();
     }
     catch (err)
     {
