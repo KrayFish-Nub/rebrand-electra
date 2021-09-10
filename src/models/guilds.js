@@ -15,6 +15,7 @@ const guildSchema = new Schema({
     },
     bots: [{
         type: Types.ObjectId,
+        unique: true,
         ref: "Bot"
     }]
 }, { timestamps: true });
