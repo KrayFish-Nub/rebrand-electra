@@ -25,7 +25,7 @@ module.exports.run = async (interaction, utils) =>
         if (guildQuery)
         {
             /* Check if the user is a bot. */
-            const bot = await interaction.options.getUser("bot", true);
+            const bot = interaction.options.getUser("bot", true);
             if (!bot.bot)
             {
                 await interaction.editReply({ content: "Expected a bot.", ephemeral: true });
