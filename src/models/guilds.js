@@ -7,8 +7,12 @@ const guildSchema = new Schema({
         unique: true,
         required: true
     },
-    role: String,
-    channelId:
+    role:
+    {
+        type: String,
+        required: true
+    },
+    channel:
     {
         type: String,
         required: true
