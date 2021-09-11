@@ -18,7 +18,7 @@ module.exports.run = async (interaction, utils) =>
   
     try
     {
-        await interaction.reply({ content: `Your input: ${int}`, ephemeral: true });
+        await interaction.reply({ content: `Your input`, ephemeral: true });
         return Promise.resolve();
     }
     catch (err)
