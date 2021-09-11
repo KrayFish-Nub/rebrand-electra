@@ -1,7 +1,6 @@
 "use strict";
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { CommandInteraction, Permissions } = require("discord.js");
-const Guild = require("../../models/guilds.js");
 
 module.exports.cooldown = {
     length: 10000, /* in ms */
@@ -9,17 +8,16 @@ module.exports.cooldown = {
 };
 
 /**
- * Sets up the bot for first use.
+ * Runs args command.
  * @param {CommandInteraction} interaction The Command Interaciton
  * @param {any} utils Additional util
  */
 module.exports.run = async (interaction, utils) =>
 {
-    const echo = interaction.options.getInteger('int');
-
     try
     {
-        await interaction.reply({ content: echo, ephemeral: true });
+        const echo = interaction.options.getInteger('int', true);
+        await interaction.reply({ content: echo.toString(), ephemeral: true });
         return Promise.resolve();
     }
     catch (err)
@@ -37,4 +35,4 @@ module.exports.data = new SlashCommandBuilder()
     .setName("args")
     .setDescription("Args of the bot.")
     .addIntegerOption(option => option.setName('int').setDescription('Enter an integer').setRequired(true))
-    
+
