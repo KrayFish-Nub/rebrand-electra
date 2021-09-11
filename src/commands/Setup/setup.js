@@ -32,7 +32,7 @@ module.exports.run = async (interaction, utils) =>
             const newGuild = new Guild({
                 id: interaction.guildId,
                 role: role.id,
-                channelId: channel.id
+                channel: channel.id
             });
             newGuild.save();
             interaction.editReply({ content: "Guild setup successfully.", ephemeral: true });
