@@ -15,11 +15,11 @@ module.exports.cooldown = {
  */
 module.exports.run = async (interaction, utils) =>
 {
-    const integer = interaction.options.getInteger('int');
+    const echo = interaction.options.getInteger('int');
 
     try
     {
-        await interaction.reply({ content: `123`, ephemeral: true });
+        await interaction.reply({ content: echo, ephemeral: true });
         return Promise.resolve();
     }
     catch (err)
