@@ -18,7 +18,6 @@ module.exports.run = async (interaction, utils) =>
     {
         const echo = interaction.options.getInteger('int', true);
         await interaction.reply({ content: echo.toString(), ephemeral: true });
-        return Promise.resolve();
     }
     catch (err)
     {

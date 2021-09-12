@@ -48,8 +48,8 @@ else
         const event = require(`${file}`);
         console.log(green(`${++i}. Event: ${file.split('\\').pop().split('/').pop()} loaded!`));
         if (event.data.once)
-            client.once(event.data.name, (...args) => event.run(...args));
-        else client.on(event.data.name, (...args) => event.run(...args));
+            client.once(event.data.name, (...args) => event.run(...args).catch(err => console.error(red(err))));
+        else client.on(event.data.name, (...args) => event.run(...args).catch(err => console.error(red(err))));
     });
 }
 

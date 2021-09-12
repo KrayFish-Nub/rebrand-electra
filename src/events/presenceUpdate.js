@@ -20,9 +20,10 @@ module.exports.run = async (oldPresence, newPresence) =>
 {
     try
     {
-        if (!oldPresence || !oldPresence.user.bot) return;
-
-        if (oldPresence.status == newPresence.status) return;
+        if (!oldPresence || !oldPresence.user.bot)
+            return;
+        if (oldPresence.status == newPresence.status)
+            return;
 
         const guildQuery = await Guild.findOne({ id: oldPresence.guild.id });
         if (guildQuery)
@@ -62,6 +63,6 @@ module.exports.run = async (oldPresence, newPresence) =>
     }
     catch (err)
     {
-        console.error(red(err));
+        return Promise.reject(err);
     }
 };

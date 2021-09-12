@@ -21,7 +21,6 @@ module.exports.run = async (interaction, utils) =>
         delete require.cache[path.join(__dirname, "../../deployCommands.js")];
         require("../../deployCommands.js");
         await interaction.reply({ content: "Redeployed all commands.", ephemeral: true });
-        return Promise.resolve();
     }
     catch (err)
     {

@@ -29,7 +29,7 @@ module.exports.run = async (interaction, utils) =>
             if (!bot.bot)
             {
                 await interaction.editReply({ content: "Expected a bot.", ephemeral: true });
-                return Promise.resolve();
+                return;
             }
 
             /* Check if bot is already in th db. Add them otherwise. */
@@ -42,7 +42,7 @@ module.exports.run = async (interaction, utils) =>
             if (alreadyAdded)
             {
                 await interaction.editReply({ content: "The bot has already been added to the guild.", ephemeral: true });
-                return Promise.resolve();
+                return;
             }
 
             botQuery.guilds.push(guildQuery._id);
@@ -53,11 +53,7 @@ module.exports.run = async (interaction, utils) =>
             await interaction.editReply({ content: `Successfully added ${bot} to the watchlist.`, ephemeral: true });
             return Promise.resolve([guildQuery, botQuery]);
         }
-        else
-        {
-            await interaction.editReply({ content: "You need to setup the guild first before you can add a bot to the watchlist.", ephemeral: true });
-            return Promise.resolve();
-        }
+        else await interaction.editReply({ content: "You need to setup the guild first before you can add a bot to the watchlist.", ephemeral: true });
     }
     catch (err)
     {

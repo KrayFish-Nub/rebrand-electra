@@ -18,7 +18,7 @@ module.exports.run = async (interaction, utils) =>
     try
     {
         await interaction.reply({ content: "Pong", ephemeral: true });
-        return Promise.resolve();
+        return;
     }
     catch (err)
     {
