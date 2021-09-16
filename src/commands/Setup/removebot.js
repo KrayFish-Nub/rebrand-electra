@@ -6,11 +6,7 @@ const Guild = require("../../models/guilds.js");
 const Bot = require("../../models/bots.js");
 
 module.exports.cooldown = {
-<<<<<<< HEAD
-    length: 10000 /* in ms => 10secs*/,
-=======
     length: 10000 /* in ms */,
->>>>>>> 654c4b9335b814f829c061a6559b4104d813c012
     users: new Set(),
 };
 
@@ -51,13 +47,8 @@ module.exports.run = async (interaction, utils) =>
         });
         await guildQuery.save();
 
-<<<<<<< HEAD
         /* Wenn der Bot dadurch in keinem Server mehr wäre, kann man den Bot auch direkt aus der Db löschen. 
-            Andernfalls entfernt man auch bei dem Bot in dem 'guilds' Array die Referenz auf die Gilde (nix gut diese)*/
-=======
-        /* Wenn der Bot dadurch in keinem Server mehr wäre, kann man den Bot auch direkt aus der DB löschen. 
-            Andernfalls entfernt man auch bei dem Bot in dem 'guilds' Array die Referenz auf die Gilde. */
->>>>>>> 654c4b9335b814f829c061a6559b4104d813c012
+            Andernfalls entfernt man auch bei dem Bot in dem 'guilds' Array die Referenz auf die Gilde. => Nicht gut außer für one-guild purposes lmao */
         if (botQuery.guilds.length == 1)
         {
             await botQuery.remove();
@@ -88,8 +79,4 @@ module.exports.permissions = {
 module.exports.data = new SlashCommandBuilder()
     .setName("removebot")
     .setDescription("Removes a bot from the watchlist.")
-<<<<<<< HEAD
-    .addUserOption((option => option.setName("bot").setDescription("Remove a Bot from the watchlist").setRequired(true)));
-=======
-    .addUserOption((option => option.setName("bot").setDescription("Select a bot to remove from the watchlist.").setRequired(true)));
->>>>>>> 654c4b9335b814f829c061a6559b4104d813c012
+    .addUserOption((option => option.setName("bot").setDescription("Remove Bots from the Watchlist!").setRequired(true)));
