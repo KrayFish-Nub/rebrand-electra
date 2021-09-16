@@ -16,7 +16,7 @@ module.exports.run = async (interaction, utils) =>
 {
     try
     {
-        const echo = interaction.options.getInteger('int', true);
+        const echo = interaction.options.getInteger('int', true); // returning users input as an Echo
         await interaction.reply({ content: echo.toString(), ephemeral: true });
     }
     catch (err)

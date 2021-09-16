@@ -4,11 +4,10 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const { CommandInteraction, Permissions } = require("discord.js");
 const Guild = require("../../models/guilds.js");
 const Bot = require("../../models/bots.js");
-const { db } = require("../../models/guilds.js");
 
 module.exports.cooldown = {
-  length: 10000 /* in ms */,
-  users: new Set(),
+    length: 10000 /* in ms => 10secs*/,
+    users: new Set(),
 };
 
 /**
@@ -16,73 +15,68 @@ module.exports.cooldown = {
  * @param {CommandInteraction} interaction The Command Interaciton
  * @param {any} utils Additional util
  */
-module.exports.run = async (interaction, utils) => {
-  try {
-    await interaction.deferReply({ ephemeral: true });
-
-    /* Check if guild is already setup. */
-    const guildQuery = await Guild.findOne({ id: interaction.guildId });
-    if (guildQuery) {
-      /* Check if the user is a bot. */
-      const bot = interaction.options.getUser("bot", true);
-      if (!bot.bot) {
-        await interaction.editReply({
-          content: "You did not provide an actual Bot!",
-          ephemeral: true,
-        });
-        return;
-      }
-
-      /* Check if bot is in th db */
-      let botQuery = await Bot.findOne({ id: bot.id });
-      if (!botQuery)
-        await interaction.editReply({
-          content:
-            "This Bot is not connected yet, add it to be able to remove it!",
-          ephemeral: true,
-        });
-
-      /* Find the Bot and delelte it*/
-      Bot.findOneAndDelete(
+module.exports.run = async (interaction, utils) =>
+{
+    try
+    {
+        await interaction.deferReply({ ephemeral: true });
+        /* Check if the user is a bot. */
+        const bot = interaction.options.getUser("bot", true);
+        if (!bot.bot)
         {
-          id: bot.id,
-          unique: true,
-          ref: "Bot",
-        },
-        (err) => {
-          if (err) console.log(err);
+            await interaction.editReply({
+                content: "You did not provide an actual Bot!",
+                ephemeral: true,
+            });
+            return;
         }
-      );
 
-      await botQuery.save();
-      await guildQuery.save();
+        /* Check if bot is in th db */
+        const botQuery = await Bot.findOne({ id: bot.id });
+        if (!botQuery)
+            return; /* Der Bot ist nicht auf der Watchlist für den Server */
+        const guildQuery = await Guild.findOne({ id: interaction.guildId, bots: botQuery._id });
 
-      await interaction.editReply({
-        content: `Successfully removed ${bot} from the watchlist.`,
-        ephemeral: true,
-      });
-    } else
-      await interaction.editReply({
-        content:
-          "You need to setup your Guild first before you can remove a bot from the watchlist.",
-        ephemeral: true,
-      });
-  } catch (err) {
-    return Promise.reject(err);
-  }
+        if (!guildQuery)
+            return; /* Please setup your guiild first..*/
+
+
+        /* Update Guild (Entferne Referenz des Bots in dem bots array) */
+        await guildQuery.update({
+            $pull: { bots: botQuery._id }
+        });
+        await guildQuery.save();
+
+        /* Wenn der Bot dadurch in keinem Server mehr wäre, kann man den Bot auch direkt aus der Db löschen. 
+            Andernfalls entfernt man auch bei dem Bot in dem 'guilds' Array die Referenz auf die Gilde (nix gut diese)*/
+        if (botQuery.guilds.length == 1)
+        {
+            await botQuery.remove();
+            await interaction.editReply({ content: "done", ephemeral: true });
+            return;
+        }
+        else
+        {
+            await botQuery.update({
+                $pull: { guilds: guildQuery._id }
+            });
+        }
+
+        await botQuery.save();
+        await interaction.editReply({ content: "done", ephemeral: true });
+    }
+    catch (err)
+    {
+        return Promise.reject(err);
+    }
 };
 
 module.exports.permissions = {
-  clientPermissions: [Permissions.FLAGS.SEND_MESSAGES],
-  userPermissions: [Permissions.FLAGS.ADMINISTRATOR],
+    clientPermissions: [Permissions.FLAGS.SEND_MESSAGES],
+    userPermissions: [Permissions.FLAGS.ADMINISTRATOR],
 };
 
 module.exports.data = new SlashCommandBuilder()
-  .setName("removebot")
-  .setDescription("Removes a bot from the watchlist.")
-  .addUserOption((option) =>
-    option
-      .setName("bot")
-      .setDescription("Select a bot to remove from the watchlist.")
-      .setRequired(true)
-  );
+    .setName("removebot")
+    .setDescription("Removes a bot from the watchlist.")
+    .addUserOption((option => option.setName("bot").setDescription("Remove a Bot from the watchlist").setRequired(true)));
