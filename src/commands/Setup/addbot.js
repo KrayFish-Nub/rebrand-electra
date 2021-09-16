@@ -52,7 +52,7 @@ module.exports.run = async (interaction, utils) =>
 
             await interaction.editReply({ content: `Successfully added ${bot} to the watchlist.`, ephemeral: true });
         }
-        else await interaction.editReply({ content: "You need to setup the guild first before you can add a bot to the watchlist.", ephemeral: true });
+        else await interaction.editReply({ content: "You need to setup your Guild first before you can add a bot to the watchlist.", ephemeral: true });
     }
     catch (err)
     {
