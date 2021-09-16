@@ -51,7 +51,6 @@ module.exports.run = async (interaction, utils) =>
             await guildQuery.save();
 
             await interaction.editReply({ content: `Successfully added ${bot} to the watchlist.`, ephemeral: true });
-            return Promise.resolve([guildQuery, botQuery]);
         }
         else await interaction.editReply({ content: "You need to setup the guild first before you can add a bot to the watchlist.", ephemeral: true });
     }

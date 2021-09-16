@@ -38,7 +38,6 @@ module.exports.run = async (interaction, utils) =>
             });
             await interaction.editReply({ content: `Reloaded all commands.\n\`${commands.toString()}\``, ephemeral: true });
         }
-        return Promise.resolve(commands);
     }
     catch (err)
     {

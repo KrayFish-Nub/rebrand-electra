@@ -36,7 +36,6 @@ module.exports.run = async (interaction, utils) =>
             });
             newGuild.save();
             interaction.editReply({ content: "Guild setup successfully.", ephemeral: true });
-            return Promise.resolve(newGuild);
         }
         else await interaction.editReply({ content: "This guild has already been setup.", ephemeral: true });
         return;
