@@ -22,10 +22,10 @@ module.exports.run = async (interaction, client, utils) =>
         .setTitle("Electra")
         .setDescription("👋🏼 Hey! I'm **Electra!**\nMy prefix here is `*`\nIf you need any help regarding the Bot / Service, feel free to join the [Support Server](https://discord.gg/yszNJjN4Q9)\n\n**Thanks** for using me!")
        
-        if(message.mentions.has(client.id)) {
-            console.log(client)
+        if(message.content === `<@${client.user.id}>`) {
             interaction.reply({ embeds: [pingembed], ephemeral: true });
         }
+    
     }
     catch (err)
     {
