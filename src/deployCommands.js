@@ -9,9 +9,9 @@ const { Routes } = require("discord-api-types/v9");
 const { getAllFiles } = require("./util/util.js");
 const { green } = require("colors/safe");
 
-const local = true; /* Change to false to deploy global commands */
+const local = false; /* Change to false to deploy global commands */
 
-const clientId = "885211446382837781"; /* Change clientId */
+const clientId = "841978658373894174"; /* Change clientId */
 const guildId = "885212846667993118"; /* Change guildId (for local commands) */
 const commands = [];
 

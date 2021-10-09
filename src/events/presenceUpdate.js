@@ -36,6 +36,7 @@ module.exports.run = async (oldPresence, newPresence) =>
                     embeds: [{
                         title: "Bot went online!",
                         description: `Looks like ${newPresence.member.displayName} (${newPresence.user.tag}) just went online!`,
+                        color: "GREEN",
                         thumbnail: {
                             url: newPresence.user.avatarURL({ format: "png", size: 1024 }),
                         },
@@ -52,6 +53,7 @@ module.exports.run = async (oldPresence, newPresence) =>
                     embeds: [{
                         title: "Bot went offline!",
                         description: `Looks like ${newPresence.member.displayName} (${newPresence.user.tag}) just went offline!`,
+                        color: "RED",
                         thumbnail: {
                             url: newPresence.user.avatarURL({ format: "png", size: 1024 }),
                         },

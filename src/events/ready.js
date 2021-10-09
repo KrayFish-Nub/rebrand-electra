@@ -18,6 +18,8 @@ module.exports.run = async (client) =>
 {
     console.log(yellow("✅ [INFO]: Bot is running."));
     console.log(white(`✅ [INFO]: Porting over: ${client.users.cache.size} Users`));
-    client.user.setPresence({ activities: [{ name: `Serving ${client.guilds.cache.size} Servers` }] });
+    client.user.setPresence({ activities: [{ name: `NEW UPDATE! CLICK ME.` }] });
+
+    // Serving ${client.guilds.cache.size} Servers
 
 };
