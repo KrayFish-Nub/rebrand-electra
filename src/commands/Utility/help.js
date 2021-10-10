@@ -23,7 +23,7 @@ module.exports.run = async (interaction, utils) =>
         **Setup - Commands**
         \`setup\`- Setup Channel & Role for Electra
         \`addbot\`- Add a Bot Electra should track
-        \`removebot\`- Remove a Bot Electra should'nt track anymore\n
+        \`removebot\`- Remove a Bot Electra shouldn't track anymore\n
         **Utility - Commands**
         \`help\`- Electras help Command
         \`ping\`- Electras current latency
@@ -31,7 +31,11 @@ module.exports.run = async (interaction, utils) =>
         \`support\`- Electras Support Servers Link
         \`uptime\`- Since when is Electra online?
         
-        Electra Development
+        Discord forced us to move over to Slash Commands, you have to setup the Bot again and the old Database got deleted.
+        First run /setup + role + channel
+        Then, add your Bots with /addbot + bot
+        
+        Electra Development 💖
         `)
         await interaction.reply({ embeds: [embed], ephemeral: true });
         return;

@@ -68,4 +68,8 @@ module.exports.permissions = {
 module.exports.data = new SlashCommandBuilder()
     .setName("addbot")
     .setDescription("Adds a bot to the watchlist.")
-    .addUserOption(option => option.setName("bot").setDescription("Select a bot to add to the watchlist.").setRequired(true));
+    .addUserOption(option => option.setName("bot").setDescription("Select a bot to add to the watchlist.").setRequired(true))
+    .addUserOption(option => option.setName("bot").setDescription("Select bot 2 to add to the watchlist.").setRequired(false))
+    .addUserOption(option => option.setName("bot").setDescription("Select bot 3 to add to the watchlist.").setRequired(false))
+    .addUserOption(option => option.setName("bot").setDescription("Select bot 4 to add to the watchlist.").setRequired(false))
+    .addUserOption(option => option.setName("bot").setDescription("Select bot 5 to add to the watchlist.").setRequired(false))
