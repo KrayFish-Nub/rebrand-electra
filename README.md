@@ -15,4 +15,4 @@
 # Support
 - Please leave a like (star) on the Repo if we could help you grow your Bot and make it unique!
 - Feel free to open Issue/Pull Requests if you find any Bug/Issue within the new Beta Code.
-- If you don't want to copy paste and use the Bot instead, invite it (here)[https://top.gg/bot/841978658373894174]
+- If you don't want to copy paste and use the Bot instead, invite it [here](https://top.gg/bot/841978658373894174)
