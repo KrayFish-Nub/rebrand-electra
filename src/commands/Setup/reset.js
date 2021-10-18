@@ -23,19 +23,19 @@ module.exports.run = async (interaction, utils) =>
     {
         await interaction.deferReply({ ephemeral: true });
 
-        /* Check if guild is already setup. */
+        /* Check if guild is setup. */
         const guildQuery = await Guild.findOne({ id: interaction.guildId });
         if (guildQuery)
         {
             
-            /* Check if bot is already in th db. Add them otherwise. */
+            /* Check if bot is in the db */
             let botQuery = await Bot.findOne({ id: bot.id });
             if (!botQuery)
                 return; 
 
 
-            botQuery.guilds.remove(guildQuery._id);
-            guildQuery.bots.remove(botQuery._id);
+            botQuery.guilds.findOneAndDelete(guildQuery._id);
+            guildQuery.bots.findOneAndDelete(botQuery._id);
             await botQuery.save();
             await guildQuery.save();
 
